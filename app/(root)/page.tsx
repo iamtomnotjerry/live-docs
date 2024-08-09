@@ -8,5 +8,5 @@ const Home = () => {
     </div>
   )
 }
-
+/*checknote**/
 export default Home
