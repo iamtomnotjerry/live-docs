@@ -4,9 +4,10 @@ import React from 'react'
 import { Editor } from '@/components/editor/Editor'
 import Header from '@/components/Header'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
-const CollaborativeRoom = () => {
+import ActiveCollaborators from './ActiveCollaborators'
+const CollaborativeRoom = ({ roomId, roomMetadata}: CollaborativeRoomProps) => {
   return (
-    <RoomProvider id="my-room">
+    <RoomProvider id={roomId}>
         <ClientSideSuspense fallback={<div>Loading…</div>}>
           <div className='collaborative-room'>
             <Header>
@@ -14,12 +15,16 @@ const CollaborativeRoom = () => {
                         <p className='document-title'>Share</p>
 
                     </div>
-                    <SignedOut>
+                    <div className='flex w-full flex-1 justify-end gap-2 sm:gap-3'> 
+                      <ActiveCollaborators/>
+                      <SignedOut>
                         <SignInButton />
-                    </SignedOut>
-                    <SignedIn>
+                      </SignedOut>
+                      <SignedIn>
                         <UserButton />
-                    </SignedIn>
+                      </SignedIn>
+                    </div>
+                    
                 </Header>
                 <Editor/>
           </div>
