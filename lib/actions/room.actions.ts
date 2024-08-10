@@ -5,6 +5,7 @@ import { liveblocks } from '../liveblocks';
 import { revalidatePath } from 'next/cache';
 import { getAccessType, parseStringify } from '../utils';
 import { redirect } from 'next/navigation';
+import { RoomProvider } from '@liveblocks/react/suspense';
 
 export const createDocument = async ({ userId, email }: CreateDocumentParams) => {
   const roomId = nanoid();
@@ -66,15 +67,15 @@ export const updateDocument = async (roomId: string, title: string) => {
   }
 }
 
-export const getDocuments = async (email: string ) => {
-  try {
-      const rooms = await liveblocks.getRooms({ userId: email });
+// export const getDocuments = async (email: string ) => {
+//   try {
+//       const rooms = await liveblocks.getRooms({ userId: email });
     
-      return parseStringify(rooms);
-  } catch (error) {
-    console.log(`Error happened while getting rooms: ${error}`);
-  }
-}
+//       return parseStringify(rooms);
+//   } catch (error) {
+//     console.log(`Error happened while getting rooms: ${error}`);
+//   }
+// }
 
 export const updateDocumentAccess = async ({ roomId, email, userType, updatedBy }: ShareDocumentParams) => {
   try {
@@ -141,3 +142,16 @@ export const deleteDocument = async (roomId: string) => {
     console.log(`Error happened while deleting a room: ${error}`);
   }
 }
+
+export const getDocument = async ({roomId, userId} : {RoomId: string; userId: string}) => {
+  try {
+    const room = await liveblock.getRoom(roomId);
+    // const hasAccess = Object.keys(room.userAccesses).includes(userId);
+
+    // if(!hasAccess) {
+    //   throw new Error ('You do not have access to this document');
+    // }
+    return parseSttringify(room);
+  } catch (error) {
+    console.log('Error happened while getting a room: ${error}');
+}};
